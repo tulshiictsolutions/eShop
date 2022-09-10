@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:11280
+    ports:
+      - "11280"
+  webapp:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - WebApiBaseAddress=http://webapi:11280
+    ports:
+      - "80"
+  mssql:
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=yourStrong(!)Password
+        - MSSQL_PID=Express
+    ports:
+      - "1433"
+    volumes:
+        - sqldatavol:/var/opt/mssql
+
+        
+  

@@ -1,0 +1,29 @@
+﻿@using WebApp.Models;
+
+@model List<WeatherForecastModel>
+
+@{
+    ViewData["Title"] = "Forecast";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Summary</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    @foreach(var weather in Model)
+    {
+        <tr>
+            <td>
+                @weather.Summary
+            </td>
+            <td>
+               @weather.Date.ToShortDateString()
+            </td>
+        </tr>
+    }
+</table>
+

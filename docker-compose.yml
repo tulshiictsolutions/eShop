@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  webapi:
+    container_name: webapi
+    image: tulshiacr.azurecr.io/webapi:v1
+    build:
+      context: .
+      dockerfile: WebApi/Dockerfile    
+    depends_on:
+        - mssql
+  webapp:
+    container_name: webapp
+    image: tulshiacr.azurecr.io/webapp:v1
+    depends_on:
+        - webapi
+    build:
+      context: .
+      dockerfile: WebApp/Dockerfile
+    volumes:
+        - webvol:/app/wwwroot
+
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    volumes:    
+        - sqldatavol:/var/opt/mssql        
+    deploy:
+      resources:
+        reservations:
+            cpus: "1"
+            memory: 8G
+        limits:
+            cpus: "1"
+            memory: 8G  
+volumes:
+    sqldatavol:
+        name: sqldatavol
+    webvol:
+        name:  webvol
